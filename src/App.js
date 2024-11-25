@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AWS from 'aws-sdk';
+import AWS from '@aws-sdk/client-s3';
 
 const S3_BUCKET = 'potatochipsmania-test';
 const REGION = process.env.AWS_S3_REGION;
