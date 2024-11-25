@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 코드 체크 아웃
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
 
       - name: AWS IAM 사용자 설정
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_S3_ACCESSKEY }}
           aws-secret-access-key: ${{ secrets.AWS_S3_SECRETKEY }}
@@ -34,3 +34,13 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESSKEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRETKEY }}
+
+
+        - name: 캐시 무력화
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: ${{ secrets.AWS_CLOUDFRONT_ID }}
+          PATHS: "/*"
+          AWS_REGION: ap-northeast-2
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
