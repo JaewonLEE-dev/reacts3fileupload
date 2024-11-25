@@ -1,0 +1,36 @@
+name: CI/Cd AWS S3
+
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 체크 아웃
+        uses: actions/checkout@v3
+
+
+      - name: AWS IAM 사용자 설정
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_S3_ACCESSKEY }}
+          aws-access-access-key: ${{ secrets.AWS_S3_SECRETKEY }}
+          aws-region: ${{ secrets.AWS_S3_REGION}}
+
+
+      - name: react build
+        run: |
+          npm install
+          npm run build
+
+
+      - name: s3에 업로드
+        run: aws s3 sync build/ s3://${{ secrets.AWS_S3_BUCKET}} --acl public-read
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESSKEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRETKEY }}
