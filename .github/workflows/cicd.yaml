@@ -19,7 +19,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_S3_ACCESSKEY }}
-          aws-access-access-key: ${{ secrets.AWS_S3_SECRETKEY }}
+          aws-secret-access-key: ${{ secrets.AWS_S3_SECRETKEY }}
           aws-region: ${{ secrets.AWS_S3_REGION}}
 
 
