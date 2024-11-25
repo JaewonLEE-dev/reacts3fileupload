@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AWS from 'aws-sdk';
 
-const S3_BUCKET = 'potatochipsmania-test';
+const S3_BUCKET = process.env.AWS_S3_BUCKET;
 const REGION = process.env.AWS_S3_REGION;
 
 AWS.config.update({
